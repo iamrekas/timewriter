@@ -131,7 +131,16 @@ func (l *TimeWriter) timeFromName(filename, prefix, ext string) (time.Time, erro
 	if !strings.HasSuffix(filename, ext) {
 		return time.Time{}, errors.New("mismatched extension")
 	}
-	ts := filename[len(prefix) : len(filename)-len(ext)]
+
+	// Calculate the timestamp part
+	start := len(prefix)
+	end := len(filename) - len(ext)
+
+	// Ensure valid slice bounds
+	if start >= end {
+		return time.Time{}, errors.New("invalid filename: prefix and suffix overlap or are invalid")
+	}
+	ts := filename[start:end]
 	if len(ts) != 8 {
 		return time.Time{}, errors.New("mismatched date")
 	}
