@@ -1,3 +1,3 @@
-module github.com/longbozhan/timewriter
+module github.com/iamrekas/timewriter
 
 go 1.16
